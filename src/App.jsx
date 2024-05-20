@@ -1,11 +1,11 @@
 import { useState } from "react";
 import placeSound from "./assets/sounds/piece-place.m4a";
 import removeSound from "./assets/sounds/piece-remove.m4a";
-const n = 4;
+const n = 6;
 function App() {
   return (
     <>
-      <div className="h-dvh bg-theme">
+      <div className="h-dvh bg-theme overflow-auto p-7">
         <Board />
       </div>
     </>
@@ -141,7 +141,7 @@ function Board() {
       <div
         className={`${
           (row + col) % 2 == 0 ? "bg-[#ebecd0]" : "bg-[#779556]"
-        } h-32 w-32 p-2 hover:ring-3 hover:cursor-pointer`}
+        } h-28 w-28 p-2 hover:ring-3 hover:cursor-pointer`}
         key={`${row}${col}`}
         onClick={() => onCellClick(i)}
       >
@@ -149,11 +149,10 @@ function Board() {
       </div>
     );
   });
-
   return (
     <>
-      <div className="flex justify-center items-center h-full flex-col overflow-auto">
-        <div className={`grid grid-cols-4 w-fit`}>{cells}</div>
+      <div className="flex justify-center items-center h-full flex-col  mt-6">
+        <div className={`grid grid-cols-6 w-fit`}>{cells}</div>
         <button
           disabled={isSolving}
           onClick={startNQueen}
