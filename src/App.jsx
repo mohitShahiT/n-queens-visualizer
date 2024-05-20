@@ -1,7 +1,7 @@
 import { useState } from "react";
 import placeSound from "./assets/sounds/piece-place.m4a";
 import removeSound from "./assets/sounds/piece-remove.m4a";
-const n = 6;
+const n = 4;
 function App() {
   return (
     <>
@@ -74,22 +74,21 @@ async function visualizeNQueen(board, setBoard, index) {
   if (index === n * n) return true;
   const [row] = getRowCol(index);
   for (let col = 0; col < n; col++) {
-    console.log("col", col);
+    // console.log("col", col);
     const indx = getIndex(row, col);
     const newBoard = [...board];
     if (isValidMove(board, indx)) {
       newBoard[indx] = 1;
-      await sleep(400);
+      await sleep(300);
       placeQueen(newBoard, setBoard, indx);
       if (await visualizeNQueen(newBoard, setBoard, getIndex(row + 1, 0))) {
         return true;
       }
     }
     newBoard[indx];
-    console.log("removing");
+    // console.log("removing");
     removeQueen(newBoard, setBoard, indx);
-    await sleep(400);
-
+    await sleep(300);
   }
   return false;
 }
@@ -111,8 +110,7 @@ function Board() {
   const [board, setBoard] = useState(Array(n * n).fill(0));
   const [isSolving, setIsSolving] = useState(false);
 
-
-  async function startNQueen(){
+  async function startNQueen() {
     setIsSolving(true);
     await visualizeNQueen(board, setBoard, 0);
     setIsSolving(false);
@@ -155,8 +153,14 @@ function Board() {
   return (
     <>
       <div className="flex justify-center items-center h-full flex-col overflow-auto">
-        <div className={`grid grid-cols-${n} w-fit`}>{cells}</div>
-        <button disabled={isSolving} onClick={startNQueen} className="text-white border-2 border-black-500 px-4 py-2 uppercase rounded-md text-xl mt-5 bg-black hover:bg-slate-500">{isSolving? "Solving...": "Start"}</button>
+        <div className={`grid grid-cols-4 w-fit`}>{cells}</div>
+        <button
+          disabled={isSolving}
+          onClick={startNQueen}
+          className="text-white border-2 border-black-500 px-4 py-2 uppercase rounded-md text-xl mt-5 bg-black hover:bg-slate-500"
+        >
+          {isSolving ? "Solving..." : "Start"}
+        </button>
       </div>
     </>
   );
