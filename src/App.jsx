@@ -1,7 +1,7 @@
 import { useState } from "react";
 import placeSound from "./assets/sounds/piece-place.m4a";
 import removeSound from "./assets/sounds/piece-remove.m4a";
-const n = 4;
+const n = 6;
 function App() {
   return (
     <>
@@ -161,7 +161,7 @@ function Board() {
   return (
     <>
       <div className="flex justify-center items-center h-full flex-col  mt-6">
-        <div className={`grid grid-cols-4 w-fit`}>{cells}</div>
+        <div className={`grid grid-cols-6 w-fit`}>{cells}</div>
         <div className="flex items-center content-center mt-5 gap-3">
           <button
             disabled={isSolving || isSolved}
