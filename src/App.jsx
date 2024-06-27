@@ -1,7 +1,7 @@
 import { useState } from "react";
 import placeSound from "./assets/sounds/piece-place.m4a";
 import removeSound from "./assets/sounds/piece-remove.m4a";
-const n = 6;
+const n = 4;
 function App() {
   return (
     <>
@@ -85,7 +85,7 @@ async function visualizeNQueen(board, setBoard, index) {
         return true;
       }
     }
-    newBoard[indx];
+    newBoard[indx] = 0;
     // console.log("removing");
     removeQueen(newBoard, setBoard, indx);
     await sleep(300);
@@ -109,10 +109,15 @@ function playRemoveSound() {
 function Board() {
   const [board, setBoard] = useState(Array(n * n).fill(0));
   const [isSolving, setIsSolving] = useState(false);
+  const [isSolved, setIsSolved] = useState(false);
 
   async function startNQueen() {
+    setBoard(() => Array(n * n).fill(0));
     setIsSolving(true);
+    setIsSolved(false);
+    setBoard(Array(n * n).fill(0));
     await visualizeNQueen(board, setBoard, 0);
+    setIsSolved(true);
     setIsSolving(false);
   }
 
@@ -134,6 +139,10 @@ function Board() {
       removeQueen(board, setBoard, pos);
     }
   }
+  function resetBoard() {
+    setIsSolved(false);
+    setBoard(Array(n * n).fill(0));
+  }
 
   const cells = board.map((cell, i) => {
     const [row, col] = getRowCol(i);
@@ -152,14 +161,24 @@ function Board() {
   return (
     <>
       <div className="flex justify-center items-center h-full flex-col  mt-6">
-        <div className={`grid grid-cols-6 w-fit`}>{cells}</div>
-        <button
-          disabled={isSolving}
-          onClick={startNQueen}
-          className="text-white border-2 border-black-500 px-4 py-2 uppercase rounded-md text-xl mt-5 bg-black hover:bg-slate-500"
-        >
-          {isSolving ? "Solving..." : "Start"}
-        </button>
+        <div className={`grid grid-cols-4 w-fit`}>{cells}</div>
+        <div className="flex items-center content-center mt-5 gap-3">
+          <button
+            disabled={isSolving || isSolved}
+            onClick={startNQueen}
+            className="text-white border-2 border-black-500 px-4 py-2 uppercase rounded-md text-xl  bg-black hover:bg-slate-500"
+          >
+            {isSolving ? "Solving..." : isSolved ? "Solved" : "Start"}
+          </button>
+          {isSolved && (
+            <button
+              onClick={resetBoard}
+              className="text-white border-2 border-black-500 px-4 py-2 uppercase rounded-md text-xl  bg-black hover:bg-slate-500"
+            >
+              Reset
+            </button>
+          )}
+        </div>
       </div>
     </>
   );
