@@ -161,6 +161,17 @@ function Board() {
   return (
     <>
       <div className="flex justify-center items-center h-full flex-col  mt-6">
+        <div className="mb-20 flex flex-col items-center">
+          <h1 className=" text-5xl text-zinc-300">N-Queens Visualizer</h1>
+          <div className="mt-2">
+            <a
+              href="https://github.com/mohitShahiT/n-queens-visualizer"
+              target="blank"
+            >
+              <img className="h-8" src="/github-icon.png"></img>
+            </a>
+          </div>
+        </div>
         <div className={`grid grid-cols-6 w-fit`}>{cells}</div>
         <div className="flex items-center content-center mt-5 gap-3">
           <button
